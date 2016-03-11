@@ -1,0 +1,28 @@
+/* spa-component-list: release */
+.component.list {
+    background-color: #333;
+    width: 100%; }
+    .component.list > .item {
+        cursor: pointer;
+        padding: 0 10px;
+        vertical-align: middle;
+        height: 32px;
+        line-height: 32px; }
+        .component.list > .item.mark {
+            background-color: green;
+            color: black; }
+        .component.list > .item.focus {
+            background-color: orange;
+            color: black; }
+        .component.list > .item.focus.mark {
+            background-color: #ae7200;
+            color: white; }
+
+.component.list.horizontal {
+    display: table;
+    table-layout: fixed;
+    width: 100%; }
+    .component.list.horizontal > .item {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle; }

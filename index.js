@@ -53,7 +53,7 @@ function List ( config ) {
     // sanitize
     config = config || {};
 
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( typeof config !== 'object' ) { throw new Error(__filename + ': wrong config type'); }
         // init parameters checks
         if ( config.className && typeof config.className !== 'string' ) { throw new Error(__filename + ': wrong or empty config.className'); }
@@ -130,7 +130,7 @@ function List ( config ) {
 
     // custom navigation method
     //if ( config.navigate ) {
-    //    if ( DEBUG ) {
+    //    if ( DEVELOP ) {
     //        if ( typeof config.navigate !== 'function' ) { throw new Error(__filename + ': wrong config.navigate type'); }
     //    }
     //    // apply
@@ -285,7 +285,7 @@ List.prototype.defaultEvents = {
 function normalize ( data ) {
     var i, item;
 
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
         if ( !Array.isArray(data) ) { throw new Error(__filename + ': wrong data type'); }
     }
@@ -302,7 +302,7 @@ function normalize ( data ) {
             };
         }
 
-        if ( DEBUG ) {
+        if ( DEVELOP ) {
             //if ( !('value' in item) ) { throw new Error(__filename + ': field "value" is missing'); }
             if ( ('mark' in item) && Boolean(item.mark) !== item.mark ) { throw new Error(__filename + ': item.mark must be boolean'); }
         }
@@ -342,7 +342,7 @@ List.prototype.init = function ( config ) {
         },
         item, i;
 
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
         if ( typeof config !== 'object' ) { throw new Error(__filename + ': wrong config type'); }
     }
@@ -355,7 +355,7 @@ List.prototype.init = function ( config ) {
 
     // apply list of items
     if ( config.data ) {
-        if ( DEBUG ) {
+        if ( DEVELOP ) {
             if ( !Array.isArray(config.data) ) { throw new Error(__filename + ': wrong config.data type'); }
         }
         // prepare user data
@@ -364,7 +364,7 @@ List.prototype.init = function ( config ) {
 
     // custom render method
     if ( config.render ) {
-        if ( DEBUG ) {
+        if ( DEVELOP ) {
             if ( typeof config.render !== 'function' ) { throw new Error(__filename + ': wrong config.render type'); }
         }
         // apply
@@ -373,7 +373,7 @@ List.prototype.init = function ( config ) {
 
     // list items amount on page
     if ( config.size ) {
-        if ( DEBUG ) {
+        if ( DEVELOP ) {
             if ( Number(config.size) !== config.size ) { throw new Error(__filename + ': config.size must be a number'); }
             if ( config.size <= 0 ) { throw new Error(__filename + ': config.size should be positive'); }
         }
@@ -402,7 +402,7 @@ List.prototype.init = function ( config ) {
 
     // view window position
     if ( config.viewIndex !== undefined ) {
-        if ( DEBUG ) {
+        if ( DEVELOP ) {
             if ( Number(config.viewIndex) !== config.viewIndex ) { throw new Error(__filename + ': config.viewIndex must be a number'); }
             if ( config.viewIndex < 0 ) { throw new Error(__filename + ': config.viewIndex should be positive'); }
         }
@@ -412,7 +412,7 @@ List.prototype.init = function ( config ) {
 
     // set focus item
     if ( config.focusIndex !== undefined ) {
-        if ( DEBUG ) {
+        if ( DEVELOP ) {
             if ( Number(config.focusIndex) !== config.focusIndex ) { throw new Error(__filename + ': config.focusIndex must be a number'); }
             if ( config.focusIndex < 0 ) { throw new Error(__filename + ': config.focusIndex should be positive'); }
             if ( config.focusIndex > this.data.length - 1 ) { throw new Error(__filename + ': config.focusIndex should be less than data size'); }
@@ -450,7 +450,7 @@ List.prototype.init = function ( config ) {
 List.prototype.renderView = function ( index ) {
     var $item, i, itemData, prevIndex, currIndex;
 
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
         if ( Number(index) !== index ) { throw new Error(__filename + ': index must be a number'); }
         if ( index < 0 ) { throw new Error(__filename + ': index should be more than zero'); }
@@ -545,7 +545,7 @@ List.prototype.renderView = function ( index ) {
  * @fires module:stb/ui/list~List#overflow
  */
 List.prototype.move = function ( direction ) {
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
         if ( Number(direction) !== direction ) { throw new Error(__filename + ': direction must be a number'); }
     }
@@ -677,20 +677,20 @@ List.prototype.move = function ( direction ) {
 List.prototype.focusItem = function ( $item ) {
     var $prev = this.$focusItem;
 
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
     }
 
     // different element
     if ( $item && $prev !== $item ) {
-        if ( DEBUG ) {
+        if ( DEVELOP ) {
             if ( !($item instanceof Element) ) { throw new Error(__filename + ': wrong $item type'); }
             if ( $item.parentNode !== this.$body ) { throw new Error(__filename + ': wrong $item parent element'); }
         }
 
         // some item is focused already
         if ( $prev !== null ) {
-            if ( DEBUG ) {
+            if ( DEVELOP ) {
                 if ( !($prev instanceof Element) ) { throw new Error(__filename + ': wrong $prev type'); }
             }
 
@@ -761,7 +761,7 @@ List.prototype.focusItem = function ( $item ) {
 List.prototype.focusIndex = function ( index ) {
     var viewIndex = this.viewIndex || 0;
 
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( Number(index) !== index ) { throw new Error(__filename + ': index must be a number'); }
         if ( index < 0 ) { throw new Error(__filename + ': index should be positive'); }
         if ( index > this.data.length - 1 ) { throw new Error(__filename + ': index should be less than data size'); }
@@ -798,7 +798,7 @@ List.prototype.focusIndex = function ( index ) {
  * @param {boolean} state true - marked, false - not marked
  */
 List.prototype.markItem = function ( $item, state ) {
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( arguments.length !== 2 ) { throw new Error(__filename + ': wrong arguments number'); }
         if ( !($item instanceof Element) ) { throw new Error(__filename + ': wrong $item type'); }
         if ( $item.parentNode !== this.$body ) { throw new Error(__filename + ': wrong $item parent element'); }

@@ -6,7 +6,10 @@
         "name": "Stanislav Kalashnik",
         "email": "darkpark.main@gmail.com"
     },
-    "repository": "spasdk/component-list",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/spasdk/component-list.git"
+    },
     "scripts": {
         "sass": "node-sass --indent-width 4 --include-path ../../.. sass/develop.scss css/develop.css && node-sass --indent-width 4 --include-path ../../.. sass/release.scss css/release.css",
         "lint": "eslint *.js",

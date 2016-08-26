@@ -215,7 +215,7 @@ List.prototype.defaultEvents = {
      * @param {Event} event generated event
      */
     keydown: function ( event ) {
-        switch ( event.code ) {
+        switch ( event.keyCode ) {
             case 38:  // up
             case 40:  // down
             case 39:  // right
@@ -225,7 +225,7 @@ List.prototype.defaultEvents = {
             case 36:  // home
             case 35:  // end
                 // cursor move only on arrow keys
-                this.move(event.code);
+                this.move(event.keyCode);
                 break;
             case 13:  // ok
                 // there are some listeners

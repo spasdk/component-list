@@ -54,7 +54,7 @@ function List ( config ) {
     config = config || {};
 
     console.assert(typeof this === 'object', 'must be constructed via new');
-    
+
     if ( DEVELOP ) {
         if ( typeof config !== 'object' ) { throw new Error(__filename + ': wrong config type'); }
         // init parameters checks
@@ -229,7 +229,7 @@ List.prototype.defaultEvents = {
                 break;
             case 13:  // ok
                 // there are some listeners
-                if ( this.events['click:item'] ) {
+                if ( this.events['click:item'] && this.$focusItem) {
                     // notify listeners
                     this.emit('click:item', {$item: this.$focusItem, event: event});
                 }
@@ -411,13 +411,17 @@ List.prototype.init = function ( config ) {
     }
     // reset current view window position
     this.viewIndex = null;
+    if ( this.$focusItem ) { // this will make empty list transparent
+        this.$focusItem.classList.remove('focus');
+        this.$focusItem = null;
+    }
 
     // set focus item
-    if ( config.focusIndex !== undefined ) {
+    if ( config.focusIndex !== undefined && this.data.length ) {
         if ( DEVELOP ) {
             if ( Number(config.focusIndex) !== config.focusIndex ) { throw new Error(__filename + ': config.focusIndex must be a number'); }
             if ( config.focusIndex < 0 ) { throw new Error(__filename + ': config.focusIndex should be positive'); }
-            if ( config.focusIndex > this.data.length - 1 ) { throw new Error(__filename + ': config.focusIndex should be less than data size'); }
+//             if ( config.focusIndex > this.data.length - 1 ) { throw new Error(__filename + ': config.focusIndex should be less than data size'); }
         }
 
         // jump to the necessary item
@@ -456,7 +460,7 @@ List.prototype.renderView = function ( index ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
         if ( Number(index) !== index ) { throw new Error(__filename + ': index must be a number'); }
         if ( index < 0 ) { throw new Error(__filename + ': index should be more than zero'); }
-        if ( index >= this.data.length ) { throw new Error(__filename + ': index should be less than data size'); }
+//         if ( index >= this.data.length ) { throw new Error(__filename + ': index should be less than data size'); }
     }
 
     // has the view window position changed
@@ -551,7 +555,7 @@ List.prototype.move = function ( direction ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
         if ( Number(direction) !== direction ) { throw new Error(__filename + ': direction must be a number'); }
     }
-
+    if ( !this.data.length ) { return; } // empty list
     // up vertical or left horizontal
     if ( (direction === 38 && this.type === this.TYPE_VERTICAL) || (direction === 37 && this.type === this.TYPE_HORIZONTAL) ) {
         // still can go backward
@@ -766,7 +770,7 @@ List.prototype.focusIndex = function ( index ) {
     if ( DEVELOP ) {
         if ( Number(index) !== index ) { throw new Error(__filename + ': index must be a number'); }
         if ( index < 0 ) { throw new Error(__filename + ': index should be positive'); }
-        if ( index > this.data.length - 1 ) { throw new Error(__filename + ': index should be less than data size'); }
+//         if ( index > this.data.length - 1 ) { throw new Error(__filename + ': index should be less than data size'); }
     }
 
     // determine direction

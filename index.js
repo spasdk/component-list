@@ -229,7 +229,7 @@ List.prototype.defaultEvents = {
                 break;
             case 13:  // ok
                 // there are some listeners
-                if ( this.events['click:item'] && this.$focusItem) {
+                if ( this.events['click:item'] && this.$focusItem ) {
                     // notify listeners
                     this.emit('click:item', {$item: this.$focusItem, event: event});
                 }
@@ -555,7 +555,12 @@ List.prototype.move = function ( direction ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
         if ( Number(direction) !== direction ) { throw new Error(__filename + ': direction must be a number'); }
     }
-    if ( !this.data.length ) { return; } // empty list
+
+    // empty list
+    if ( !this.data.length ) {
+        return;
+    }
+
     // up vertical or left horizontal
     if ( (direction === 38 && this.type === this.TYPE_VERTICAL) || (direction === 37 && this.type === this.TYPE_HORIZONTAL) ) {
         // still can go backward

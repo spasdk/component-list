@@ -16,7 +16,8 @@
         "jsdoc": "jsdoc --destination doc *.js readme.md"
     },
     "dependencies": {
-        "spa-component": "spasdk/component"
+        "spa-component": "spasdk/component",
+        "stb-rc": "stbsdk/rc"
     },
     "devDependencies": {
         "spa-eslint-config": "spasdk/eslint-config"

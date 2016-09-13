@@ -8,7 +8,7 @@
 'use strict';
 
 var Component = require('spa-component'),
-    rc      = require('stbsdk/rc');
+    codes     = require('stbsdk/rc').codes;
 
 
 /**
@@ -139,31 +139,6 @@ function List ( config ) {
 
     // component setup
     this.init(config);
-
-    // custom navigation method
-    //if ( config.navigate ) {
-    //    if ( DEVELOP ) {
-    //        if ( typeof config.navigate !== 'function' ) { throw new Error(__filename + ': wrong config.navigate type'); }
-    //    }
-    //    // apply
-    //    this.navigate = config.navigate;
-    //}
-
-    // navigation by keyboard
-    //this.addListener('keydown', this.navigate);
-
-    // navigation by mouse
-    //this.$body.addEventListener('mousewheel', function ( event ) {
-    //    // scrolling by Y axis
-    //    if ( self.type === self.TYPE_VERTICAL && event.wheelDeltaY ) {
-    //        self.move(event.wheelDeltaY > 0 ? 38 : rc.codes.down);
-    //    }
-    //
-    //    // scrolling by X axis
-    //    if ( self.type === self.TYPE_HORIZONTAL && event.wheelDeltaX ) {
-    //        self.move(event.wheelDeltaX > 0 ? 37 : 39);
-    //    }
-    //});
 }
 
 
@@ -210,12 +185,12 @@ List.prototype.defaultEvents = {
     mousewheel: function ( event ) {
         // scrolling by Y axis
         if ( this.type === this.TYPE_VERTICAL && event.wheelDeltaY ) {
-            this.move(event.wheelDeltaY > 0 ? rc.codes.up : rc.codes.down);
+            this.move(event.wheelDeltaY > 0 ? codes.up : codes.down);
         }
 
         // scrolling by X axis
         if ( this.type === this.TYPE_HORIZONTAL && event.wheelDeltaX ) {
-            this.move(event.wheelDeltaX > 0 ? rc.codes.left : rc.codes.right);
+            this.move(event.wheelDeltaX > 0 ? codes.left : codes.right);
         }
     },
 
@@ -226,18 +201,18 @@ List.prototype.defaultEvents = {
      */
     keydown: function ( event ) {
         switch ( event.keyCode ) {
-            case rc.codes.up:
-            case rc.codes.down:
-            case rc.codes.right:
-            case rc.codes.left:
-            case rc.codes.pageUp:
-            case rc.codes.pageDown:
-            case rc.codes.home:
-            case rc.codes.end:
+            case codes.up:
+            case codes.down:
+            case codes.right:
+            case codes.left:
+            case codes.pageUp:
+            case codes.pageDown:
+            case codes.home:
+            case codes.end:
                 // cursor move only on arrow keys
                 this.move(event.keyCode);
                 break;
-            case rc.codes.ok:
+            case codes.ok:
                 // there are some listeners
                 if ( this.events['click:item'] && this.$focusItem ) {
                     // notify listeners
@@ -608,13 +583,13 @@ List.prototype.move = function ( direction ) {
         return;
     }
     switch ( direction ) {
-        case rc.codes.left:
+        case codes.left:
             if ( this.type === this.TYPE_HORIZONTAL ) {
                 force = true;
             } else {
                 break;
             }
-        case rc.codes.up:
+        case codes.up:
             if ( force || this.type === this.TYPE_VERTICAL ) {
                 if ( this.$focusItem && this.$focusItem.index > 0 ) {
                     if ( this.$focusItem === this.$body.firstChild ) {
@@ -644,7 +619,7 @@ List.prototype.move = function ( direction ) {
                         // already at the beginning
                         if ( this.cycle ) {
                             // jump to the end of the list
-                            this.move(rc.codes.end);
+                            this.move(codes.end);
                         }
                         if ( this.events['overflow'] ) {
                             // notify listeners
@@ -654,13 +629,13 @@ List.prototype.move = function ( direction ) {
                 }
             }
             break;
-        case rc.codes.right:
+        case codes.right:
             if ( this.type === this.TYPE_HORIZONTAL ) {
                 force = true;
             } else {
                 break;
             }
-        case rc.codes.down:
+        case codes.down:
             if ( force || this.type === this.TYPE_VERTICAL ) {
                 if ( this.$focusItem && this.$focusItem.index < this.data.length - 1 ) {
                     if ( this.$focusItem === this.$body.lastChild ) {
@@ -690,7 +665,7 @@ List.prototype.move = function ( direction ) {
                         // already at the beginning
                         if ( this.cycle ) {
                             // jump to the beginning of the list
-                            this.move(rc.codes.home);
+                            this.move(codes.home);
                         }
                         if ( this.events['overflow'] ) {
                             // notify listeners
@@ -700,7 +675,7 @@ List.prototype.move = function ( direction ) {
                 }
             }
             break;
-        case rc.codes.pageUp:
+        case codes.pageUp:
             if ( this.provider ) {
                 this.provider.get(direction, function ( error, data, pos ) {
                     if ( error ) {
@@ -730,7 +705,7 @@ List.prototype.move = function ( direction ) {
 
             this.focusItem(this.$body.firstChild);
             break;
-        case rc.codes.pageDown:
+        case codes.pageDown:
             if ( this.provider ) {
                 this.provider.get(direction, function ( error, data, pos ) {
                     if ( error ) {
@@ -766,7 +741,7 @@ List.prototype.move = function ( direction ) {
                 this.focusItem(this.$body.children[this.data.length - 1]);
             }
             break;
-        case rc.codes.home:
+        case codes.home:
             if ( this.provider ) {
                 this.provider.get(direction, function ( error, data, pos ) {
                     if ( error ) {
@@ -789,7 +764,7 @@ List.prototype.move = function ( direction ) {
             this.renderView(0);
             this.focusItem(this.$body.firstChild);
             break;
-        case rc.codes.end:
+        case codes.end:
             if ( this.provider ) {
                 this.provider.get(direction, function ( error, data, pos ) {
                     if ( error ) {

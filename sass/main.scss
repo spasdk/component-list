@@ -1,56 +1,14 @@
 // @license The MIT License (MIT)
 // @copyright Stanislav Kalashnik <darkpark.main@gmail.com>
 
-/* spa-component-list: release */
-.component.list {
-    background-color: #333;
-    //display: table;
-    //table-layout: fixed;
-    width:            100%;
-    //min-height: 250px;
+@import "../node_modules/spa-component/sass/main";
+@import "body";
 
-    //> .body {
-    //display : table-column;
+.spa-component-list {
+    @include spa-component-release;
+    @include spa-component-list;
 
-    > .item {
-        cursor:         pointer;
-        padding:        0 $listItemPaddingX;
-        vertical-align: middle;
-        height:         $listItemHeight;
-        line-height:    $listItemHeight;
-        //display: table-row;
-
-        &.mark {
-            background-color: green;
-            color:            black;
-        }
-
-        &.focus {
-            background-color: orange;
-            color:            black;
-        }
-
-        &.focus.mark {
-            background-color: #ae7200;
-            color:            white;
-        }
+    @if $DEVELOP {
+        @include spa-component-develop;
     }
-    //}
-}
-
-.component.list.horizontal {
-    display:      table;
-    table-layout: fixed;
-    width:        100%;
-    //min-height: 50px;
-
-    //> .body {
-    //display : table-row;
-
-    > .item {
-        display:        table-cell;
-        text-align:     center;
-        vertical-align: middle;
-    }
-    //}
 }

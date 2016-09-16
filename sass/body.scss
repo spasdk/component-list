@@ -1,0 +1,55 @@
+// @license The MIT License (MIT)
+// @copyright Stanislav Kalashnik <darkpark.main@gmail.com>
+
+@mixin spa-component-list {
+    background-color: #333;
+    //display: table;
+    //table-layout: fixed;
+    width:            100%;
+    //min-height: 250px;
+
+    //> .body {
+    //display : table-column;
+
+    > .item {
+        cursor:         pointer;
+        padding:        0 $listItemPaddingX;
+        vertical-align: middle;
+        height:         $listItemHeight;
+        line-height:    $listItemHeight;
+        //display: table-row;
+
+        &.mark {
+            background-color: green;
+            color:            black;
+        }
+
+        &.focus {
+            background-color: orange;
+            color:            black;
+        }
+
+        &.focus.mark {
+            background-color: #ae7200;
+            color:            white;
+        }
+    }
+    //}
+
+    &.horizontal {
+        display:      table;
+        table-layout: fixed;
+        width:        100%;
+        //min-height: 50px;
+
+        //> .body {
+        //display : table-row;
+
+        > .item {
+            display:        table-cell;
+            text-align:     center;
+            vertical-align: middle;
+        }
+        //}
+    }
+}

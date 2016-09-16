@@ -1,28 +1,29 @@
-/* spa-component-list: release */
-.component.list {
+.spa-component-list {
+    box-sizing: border-box;
     background-color: #333;
     width: 100%; }
-    .component.list > .item {
+    .spa-component-list.hidden {
+        display: none; }
+    .spa-component-list > .item {
         cursor: pointer;
         padding: 0 10px;
         vertical-align: middle;
         height: 32px;
         line-height: 32px; }
-        .component.list > .item.mark {
+        .spa-component-list > .item.mark {
             background-color: green;
             color: black; }
-        .component.list > .item.focus {
+        .spa-component-list > .item.focus {
             background-color: orange;
             color: black; }
-        .component.list > .item.focus.mark {
+        .spa-component-list > .item.focus.mark {
             background-color: #ae7200;
             color: white; }
-
-.component.list.horizontal {
-    display: table;
-    table-layout: fixed;
-    width: 100%; }
-    .component.list.horizontal > .item {
-        display: table-cell;
-        text-align: center;
-        vertical-align: middle; }
+    .spa-component-list.horizontal {
+        display: table;
+        table-layout: fixed;
+        width: 100%; }
+        .spa-component-list.horizontal > .item {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle; }

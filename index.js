@@ -3,7 +3,7 @@
  * @copyright Stanislav Kalashnik <darkpark.main@gmail.com>
  */
 
-/* eslint no-path-concat: 0 */
+/* eslint-disable */
 
 'use strict';
 
@@ -44,7 +44,7 @@ var Component = require('spa-component'),
  * @param {number}   [config.focusIndex]  list item index to make item focused (move view window to this position)
  * @param {boolean}  [config.cycle=true]  allow or not to jump to the opposite side of a list when there is nowhere to go next
  * @param {boolean}  [config.scroll=null] associated ScrollBar component link
- * @param {object}   [config.provider]      data provider
+ * @param {Object}   [config.provider]      data provider
  *
  * @fires module:stb/ui/list~List#click:item
  */
@@ -396,7 +396,7 @@ List.prototype.setData = function ( config ) {
     // apply list of items
 
     if ( config.data ) {
-        if ( DEBUG ) {
+        if ( DEVELOP ) {
             if ( !Array.isArray(config.data) ) { throw new Error(__filename + ': wrong config.data type'); }
         }
         // prepare user data
@@ -530,7 +530,7 @@ List.prototype.renderView = function ( index ) {
 
         // update a linked scroll component
         if ( this.scroll ) {
-            this.scroll.scrollTo(this.provider? this.provider.head + this.provider.pos : this.viewIndex);
+            this.scroll.scrollTo(this.provider ? this.provider.head + this.provider.pos : this.viewIndex);
         }
 
         // full rebuild
@@ -691,7 +691,7 @@ List.prototype.move = function ( direction ) {
                         }
                     } else {
                         if ( data ) {
-                            self.setData({data: data, focusIndex: pos? pos : 0});
+                            self.setData({data: data, focusIndex: pos ? pos : 0});
                         }
                     }
                 });
@@ -721,7 +721,10 @@ List.prototype.move = function ( direction ) {
                         }
                     } else {
                         if ( data ) {
-                            self.setData({data: data, focusIndex: pos || pos === 0 ? pos : data.length < self.size ?  data.length - 1 : self.size - 1});
+                            self.setData({
+                                data: data,
+                                focusIndex: pos || pos === 0 ? pos : data.length < self.size ?  data.length - 1 : self.size - 1
+                            });
                         }
                     }
                 });
@@ -780,7 +783,10 @@ List.prototype.move = function ( direction ) {
                         }
                     } else {
                         if ( data ) {
-                            self.setData({data: data, focusIndex: pos || pos === 0 ? pos : data.length < self.size ?  data.length - 1 : self.size - 1});
+                            self.setData({
+                                data: data,
+                                focusIndex: pos || pos === 0 ? pos : data.length < self.size ?  data.length - 1 : self.size - 1
+                            });
                         }
                     }
                 });
@@ -899,7 +905,7 @@ List.prototype.focusItem = function ( $item ) {
  * @fires module:stb/ui/list~List#blur:item
  */
 List.prototype.blurItem = function ( $item ) {
-    if ( DEBUG ) {
+    if ( DEVELOP ) {
         if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
     }
 

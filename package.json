@@ -1,6 +1,6 @@
 {
     "name": "spa-component-list",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Base list implementation.",
     "author": {
         "name": "Stanislav Kalashnik",
@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "spa-component": "1.*.*",
-        "stb-keys": "stbsdk/keys"
+        "spa-keys": "1.*.*"
     },
     "devDependencies": {
         "eslint": "3.*.*",

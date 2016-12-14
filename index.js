@@ -58,10 +58,16 @@ function List ( config ) {
     console.assert(typeof this === 'object', 'must be constructed via new');
 
     if ( DEVELOP ) {
-        if ( typeof config !== 'object' ) { throw new Error(__filename + ': wrong config type'); }
+        if ( typeof config !== 'object' ) {
+            throw new Error(__filename + ': wrong config type');
+        }
         // init parameters checks
-        if ( config.className && typeof config.className !== 'string' ) { throw new Error(__filename + ': wrong or empty config.className'); }
-        if ( config.type      && Number(config.type) !== config.type  ) { throw new Error(__filename + ': config.type must be a number'); }
+        if ( 'className' in config && (!config.className || typeof config.className !== 'string') ) {
+            throw new Error(__filename + ': wrong or empty config.className');
+        }
+        if ( config.type && Number(config.type) !== config.type ) {
+            throw new Error(__filename + ': config.type must be a number');
+        }
     }
 
     /**
@@ -237,8 +243,12 @@ function normalize ( data ) {
     var i, item;
 
     if ( DEVELOP ) {
-        if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
-        if ( !Array.isArray(data) ) { throw new Error(__filename + ': wrong data type'); }
+        if ( arguments.length !== 1 ) {
+            throw new Error(__filename + ': wrong arguments number');
+        }
+        if ( !Array.isArray(data) ) {
+            throw new Error(__filename + ': wrong data type');
+        }
     }
 
     // rows
@@ -254,8 +264,12 @@ function normalize ( data ) {
         }
 
         if ( DEVELOP ) {
-            //if ( !('value' in item) ) { throw new Error(__filename + ': field "value" is missing'); }
-            if ( ('mark' in item) && Boolean(item.mark) !== item.mark ) { throw new Error(__filename + ': item.mark must be boolean'); }
+            // if ( !('value' in item) ) {
+            //     throw new Error(__filename + ': field "value" is missing');
+            // }
+            if ( ('mark' in item) && Boolean(item.mark) !== item.mark ) {
+                throw new Error(__filename + ': item.mark must be boolean');
+            }
         }
     }
 
@@ -294,8 +308,12 @@ List.prototype.init = function ( config ) {
         item, i;
 
     if ( DEVELOP ) {
-        if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
-        if ( typeof config !== 'object' ) { throw new Error(__filename + ': wrong config type'); }
+        if ( arguments.length !== 1 ) {
+            throw new Error(__filename + ': wrong arguments number');
+        }
+        if ( typeof config !== 'object' ) {
+            throw new Error(__filename + ': wrong config type');
+        }
     }
 
     // apply cycle behaviour
@@ -311,8 +329,11 @@ List.prototype.init = function ( config ) {
     // custom render method
     if ( config.render ) {
         if ( DEVELOP ) {
-            if ( typeof config.render !== 'function' ) { throw new Error(__filename + ': wrong config.render type'); }
+            if ( typeof config.render !== 'function' ) {
+                throw new Error(__filename + ': wrong config.render type');
+            }
         }
+
         // apply
         this.renderItem = config.render;
     }
@@ -320,9 +341,14 @@ List.prototype.init = function ( config ) {
     // list items amount on page
     if ( config.size ) {
         if ( DEVELOP ) {
-            if ( Number(config.size) !== config.size ) { throw new Error(__filename + ': config.size must be a number'); }
-            if ( config.size <= 0 ) { throw new Error(__filename + ': config.size should be positive'); }
+            if ( Number(config.size) !== config.size ) {
+                throw new Error(__filename + ': config.size must be a number');
+            }
+            if ( config.size <= 0 ) {
+                throw new Error(__filename + ': config.size should be positive');
+            }
         }
+
         // apply
         this.size = config.size;
     }
@@ -397,8 +423,11 @@ List.prototype.setData = function ( config ) {
 
     if ( config.data ) {
         if ( DEVELOP ) {
-            if ( !Array.isArray(config.data) ) { throw new Error(__filename + ': wrong config.data type'); }
+            if ( !Array.isArray(config.data) ) {
+                throw new Error(__filename + ': wrong config.data type');
+            }
         }
+
         // prepare user data
         this.data = normalize(config.data);
     }
@@ -406,10 +435,15 @@ List.prototype.setData = function ( config ) {
     // view window position
     if ( DEVELOP ) {
         if ( config.viewIndex !== undefined ) {
-            if ( Number(config.viewIndex) !== config.viewIndex ) { throw new Error(__filename + ': config.viewIndex must be a number'); }
-            if ( config.viewIndex < 0 ) { throw new Error(__filename + ': config.viewIndex should be positive'); }
+            if ( Number(config.viewIndex) !== config.viewIndex ) {
+                throw new Error(__filename + ': config.viewIndex must be a number');
+            }
+            if ( config.viewIndex < 0 ) {
+                throw new Error(__filename + ': config.viewIndex should be positive');
+            }
         }
     }
+
     // reset current view window position
     this.viewIndex = null;
 
@@ -438,9 +472,15 @@ List.prototype.setData = function ( config ) {
     // set focus item
     if ( config.focusIndex !== undefined && this.data.length ) {
         if ( DEVELOP ) {
-            if ( Number(config.focusIndex) !== config.focusIndex ) { throw new Error(__filename + ': config.focusIndex must be a number'); }
-            if ( config.focusIndex < 0 ) { throw new Error(__filename + ': config.focusIndex should be positive'); }
-//             if ( config.focusIndex > this.data.length - 1 ) { throw new Error(__filename + ': config.focusIndex should be less than data size'); }
+            if ( Number(config.focusIndex) !== config.focusIndex ) {
+                throw new Error(__filename + ': config.focusIndex must be a number');
+            }
+            if ( config.focusIndex < 0 ) {
+                throw new Error(__filename + ': config.focusIndex should be positive');
+            }
+            // if ( config.focusIndex > this.data.length - 1 ) {
+            //     throw new Error(__filename + ': config.focusIndex should be less than data size');
+            // }
         }
 
         // jump to the necessary item
@@ -476,10 +516,18 @@ List.prototype.renderView = function ( index ) {
     var $item, i, itemData, prevIndex, currIndex;
 
     if ( DEVELOP ) {
-        if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
-        if ( Number(index) !== index ) { throw new Error(__filename + ': index must be a number'); }
-        if ( index < 0 ) { throw new Error(__filename + ': index should be more than zero'); }
-//         if ( index >= this.data.length ) { throw new Error(__filename + ': index should be less than data size'); }
+        if ( arguments.length !== 1 ) {
+            throw new Error(__filename + ': wrong arguments number');
+        }
+        if ( Number(index) !== index ) {
+            throw new Error(__filename + ': index must be a number');
+        }
+        if ( index < 0 ) {
+            throw new Error(__filename + ': index should be more than zero');
+        }
+        // if ( index >= this.data.length ) {
+        //     throw new Error(__filename + ': index should be less than data size');
+        // }
     }
 
     // has the view window position changed
@@ -576,8 +624,12 @@ List.prototype.move = function ( direction ) {
 
 
     if ( DEVELOP ) {
-        if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
-        if ( Number(direction) !== direction ) { throw new Error(__filename + ': direction must be a number'); }
+        if ( arguments.length !== 1 ) {
+            throw new Error(__filename + ': wrong arguments number');
+        }
+        if ( Number(direction) !== direction ) {
+            throw new Error(__filename + ': direction must be a number');
+        }
     }
 
     // empty list
@@ -819,20 +871,28 @@ List.prototype.focusItem = function ( $item ) {
     var $prev = this.$focusItem;
 
     if ( DEVELOP ) {
-        if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
+        if ( arguments.length !== 1 ) {
+            throw new Error(__filename + ': wrong arguments number');
+        }
     }
 
     // different element
     if ( $item && $prev !== $item ) {
         if ( DEVELOP ) {
-            if ( !($item instanceof Element) ) { throw new Error(__filename + ': wrong $item type'); }
-            if ( $item.parentNode !== this.$body ) { throw new Error(__filename + ': wrong $item parent element'); }
+            if ( !($item instanceof Element) ) {
+                throw new Error(__filename + ': wrong $item type');
+            }
+            if ( $item.parentNode !== this.$body ) {
+                throw new Error(__filename + ': wrong $item parent element');
+            }
         }
 
         // some item is focused already
         if ( $prev !== null ) {
             if ( DEVELOP ) {
-                if ( !($prev instanceof Element) ) { throw new Error(__filename + ': wrong $prev type'); }
+                if ( !($prev instanceof Element) ) {
+                    throw new Error(__filename + ': wrong $prev type');
+                }
             }
 
             // style
@@ -906,7 +966,9 @@ List.prototype.focusItem = function ( $item ) {
  */
 List.prototype.blurItem = function ( $item ) {
     if ( DEVELOP ) {
-        if ( arguments.length !== 1 ) { throw new Error(__filename + ': wrong arguments number'); }
+        if ( arguments.length !== 1 ) {
+            throw new Error(__filename + ': wrong arguments number');
+        }
     }
 
     // different element
@@ -945,9 +1007,15 @@ List.prototype.focusIndex = function ( index ) {
     var viewIndex = this.viewIndex || 0;
 
     if ( DEVELOP ) {
-        if ( Number(index) !== index ) { throw new Error(__filename + ': index must be a number'); }
-        if ( index < 0 ) { throw new Error(__filename + ': index should be positive'); }
-//         if ( index > this.data.length - 1 ) { throw new Error(__filename + ': index should be less than data size'); }
+        if ( Number(index) !== index ) {
+            throw new Error(__filename + ': index must be a number');
+        }
+        if ( index < 0 ) {
+            throw new Error(__filename + ': index should be positive');
+        }
+        // if ( index > this.data.length - 1 ) {
+        //     throw new Error(__filename + ': index should be less than data size');
+        // }
     }
 
     // determine direction
@@ -982,10 +1050,18 @@ List.prototype.focusIndex = function ( index ) {
  */
 List.prototype.markItem = function ( $item, state ) {
     if ( DEVELOP ) {
-        if ( arguments.length !== 2 ) { throw new Error(__filename + ': wrong arguments number'); }
-        if ( !($item instanceof Element) ) { throw new Error(__filename + ': wrong $item type'); }
-        if ( $item.parentNode !== this.$body ) { throw new Error(__filename + ': wrong $item parent element'); }
-        if ( Boolean(state) !== state ) { throw new Error(__filename + ': state must be boolean'); }
+        if ( arguments.length !== 2 ) {
+            throw new Error(__filename + ': wrong arguments number');
+        }
+        if ( !($item instanceof Element) ) {
+            throw new Error(__filename + ': wrong $item type');
+        }
+        if ( $item.parentNode !== this.$body ) {
+            throw new Error(__filename + ': wrong $item parent element');
+        }
+        if ( Boolean(state) !== state ) {
+            throw new Error(__filename + ': state must be boolean');
+        }
     }
 
     // correct CSS

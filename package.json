@@ -17,8 +17,8 @@
         "jsdoc": "jsdoc --destination docs *.js readme.md"
     },
     "dependencies": {
-        "spa-component": "1.*.*",
-        "spa-keys": "1.*.*"
+        "spa-component": "^1.5.0",
+        "spa-keys": "^1.4.1"
     },
     "devDependencies": {
         "jsdoc": "^3.5.5",
